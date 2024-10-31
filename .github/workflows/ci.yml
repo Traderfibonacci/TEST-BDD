@@ -1,30 +1,37 @@
 name: Continuous Integration
+
 on:
-  pull_request:  # Aciona para pull requests
-  push:          # Aciona para pushs
+  pull_request:
+  push:
     branches:
-      - '*'  # Isso significa qualquer branch
+      - '*'
+
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: http://host.docker.internal:8080
+      BASE_URL: http://localhost:8080
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: 'adopt'
-      - name: Build and test
-        run: mvn clean test #Esse comando vai rodar os testes
-  deploy:
-    runs-on: ubuntu-latest
-    needs: continuous-integration  # Esse job depende do anterior
-    if: success()  # Esse job só será executado se o job anterior for bem-sucedido
-    steps:
-      - name: Deploy application
+
+      - name: Build Docker image
         run: |
-          echo "Deploying application..."
-          # Adicione aqui seu comando de deploy
+          cd agendamento  # Navegue até o diretório correto
+          docker build -t agendamento-app .  # Construa a imagem Docker
+
+      - name: Start Docker container
+        run: |
+          docker run --network host -d --name agendamento-container agendamento-app
+          sleep 30  # Aguarde o container iniciar
+
+      - name: Build and test
+        run: mvn clean test  # Esse comando vai rodar os testes
+        env:
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}  # Adicione seu token de autenticação JWT
