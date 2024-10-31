@@ -37,6 +37,7 @@ jobs:
         run: mvn clean test  # Esse comando vai rodar os testes
         env:
           BASE_URL: http://host.docker.internal:8080
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}  # Certifique-se de ter adicionado seu token aos segredos do repositório
 
   deploy:
     runs-on: ubuntu-latest

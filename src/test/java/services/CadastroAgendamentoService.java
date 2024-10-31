@@ -52,16 +52,15 @@ public class CadastroAgendamentoService {
         String dataAgendamento = agendamentoModel.getDataAgendamento() != null ?
                 agendamentoModel.getDataAgendamento().format(DateTimeFormatter.ISO_LOCAL_DATE) : "";
         String id = new ObjectId().toString();
-
         String jsonBody = String.format("{\"id\":\"%s\", \"nomeCliente\":\"%s\", \"dataAgendamento\":\"%s\", \"tipoMaterial\":\"%s\", \"descricao\":\"%s\"}",
                 id,
                 agendamentoModel.getNomeCliente() != null ? agendamentoModel.getNomeCliente() : "",
                 dataAgendamento,
                 agendamentoModel.getTipoMaterial() != null ? agendamentoModel.getTipoMaterial() : "",
                 agendamentoModel.getDescricao() != null ? agendamentoModel.getDescricao() : "");
-
         System.out.println("JSON Enviado: " + jsonBody);
         response = given()
+                .header("Authorization", "Bearer " + System.getenv("AUTH_TOKEN"))  // Utilize a variável de ambiente
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(jsonBody)
@@ -70,9 +69,9 @@ public class CadastroAgendamentoService {
                 .then()
                 .extract()
                 .response();
-
         System.out.println("Resposta Recebida: " + response.asString());
     }
+
 
     public JsonObject retrieveCadastroByName(String nomeCliente) {
         String url = baseUrl + "/api/agendamento/nome/" + nomeCliente;
