@@ -17,7 +17,7 @@ Funcionalidade: Cadastro de novo agendamento
     Quando eu enviar a requisição para o endpoint "/api/agendamento" de cadastro de agendamento
     Então o status code da resposta deve ser 201
 
-  @regressivo
+  @padrão
   Cenário: Cadastro de agendamento com dados inválidos
     Dado que eu tenha os seguintes dados da agendamento:
       | campo          | valor        |
