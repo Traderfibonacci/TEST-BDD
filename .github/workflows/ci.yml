@@ -25,8 +25,9 @@ jobs:
           distribution: 'adopt'
 
       - name: Build Docker image
-        working-directory: agendamento  # Navegue até o diretório correto
-        run: docker build -t agendamento-app .  # Construa a imagem Docker
+        run: |
+          cd agendamento  # Navegue até o diretório correto
+          docker build -t agendamento-app .  # Construa a imagem Docker
 
       - name: Start Docker container
         run: |
