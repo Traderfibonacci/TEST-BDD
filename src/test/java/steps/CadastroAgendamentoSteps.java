@@ -1,16 +1,20 @@
 package steps;
 
 import com.google.gson.JsonObject;
+import com.networknt.schema.ValidationMessage;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import services.CadastroAgendamentoService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -66,5 +70,16 @@ public class CadastroAgendamentoSteps {
 
         Assert.assertTrue("A mensagem de erro recebida não está na lista das esperadas.",
                 mensagensEsperadas.contains(mensagemRecebida));
+    }
+
+    @E("que o arquivo de contrato esperado é o {string}")
+    public void queOArquivoDeContratoEsperadoÉO(String contract) throws IOException {
+        cadastroAgendamentoService.setContract(contract);
+    }
+
+    @Então("a resposta da requisição deve estar em conformidade com o contrato selecionado")
+    public void aRespostaDaRequisiçãoDeveEstarEmConformidadeComOContratoSelecionado() throws IOException {
+        Set<ValidationMessage> validateResponse = cadastroAgendamentoService.validateResponseAgainstSchema();
+        Assert.assertTrue("O contrato está inválido. Erros encontrados: " + validateResponse, validateResponse.isEmpty());
     }
 }

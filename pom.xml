@@ -53,6 +53,18 @@
             <artifactId>mongodb-driver-sync</artifactId>
             <version>4.7.1</version>
         </dependency>
+        <!-- Json Schema Validator -->
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <!-- Json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
 
     </dependencies>
 </project>

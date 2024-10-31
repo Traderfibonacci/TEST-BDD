@@ -1,0 +1,55 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1730390817.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "nomeCliente",
+    "dataAgendamento",
+    "tipoMaterial",
+    "descricao"
+  ],
+  "properties": {
+    "nomeCliente": {
+      "$id": "#root/nomeCliente",
+      "title": "Nomecliente",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Ana Silva"
+      ],
+      "pattern": "^.*$"
+    },
+    "dataAgendamento": {
+      "$id": "#root/dataAgendamento",
+      "title": "Dataagendamento",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "2024-10-30"
+      ],
+      "pattern": "^.*$"
+    },
+    "tipoMaterial": {
+      "$id": "#root/tipoMaterial",
+      "title": "Tipomaterial",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Reciclavel"
+      ],
+      "pattern": "^.*$"
+    },
+    "descricao": {
+      "$id": "#root/descricao",
+      "title": "Descricao",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Coleta de plastico"
+      ],
+      "pattern": "^.*$"
+    }
+  }
+}

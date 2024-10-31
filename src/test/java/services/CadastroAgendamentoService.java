@@ -1,15 +1,28 @@
 package services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.AgendamentoModel;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 import static io.restassured.RestAssured.given;
 
@@ -106,5 +119,29 @@ public class CadastroAgendamentoService {
         return null;
     }
 
+    String schemasPath = "src/test/resources/schemas/";
+    JSONObject jsonSchema;
+    private final ObjectMapper mapper = new ObjectMapper();
 
+    private JSONObject loadJsonFromFile(String filePath) throws IOException {
+        try (InputStream inputStream = Files.newInputStream(Paths.get(filePath))) {
+            JSONTokener tokener = new JSONTokener(inputStream);
+            return new JSONObject(tokener);
+        }
+    }
+    public void setContract(String contract) throws IOException {
+        switch (contract) {
+            case "Cadastro bem-sucedido de agendamento" -> jsonSchema = loadJsonFromFile(schemasPath + "cadastro-bem-sucedido-de-agendamento.json");
+            default -> throw new IllegalStateException("Unexpected contract" + contract);
+        }
+    }
+    public Set<ValidationMessage> validateResponseAgainstSchema() throws IOException
+    {
+        JSONObject jsonResponse = new JSONObject(response.getBody().asString());
+        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
+        JsonSchema schema = schemaFactory.getSchema(jsonSchema.toString());
+        JsonNode jsonResponseNode = mapper.readTree(jsonResponse.toString());
+        Set<ValidationMessage> schemaValidationErrors = schema.validate(jsonResponseNode);
+        return schemaValidationErrors;
+    }
 }
