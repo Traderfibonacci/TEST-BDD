@@ -1,9 +1,12 @@
 # language: pt
+
+
 Funcionalidade: Cadastro de novo agendamento
   Como usuário da API
   Quero cadastrar um novo agendamento
   Para que o registro seja salvo corretamente no sistema
 
+  @regressivo
   Cenário: Cadastro bem-sucedido de agendamento
     Dado que eu tenha os seguintes dados da agendamento:
       | campo          | valor         |
@@ -14,6 +17,7 @@ Funcionalidade: Cadastro de novo agendamento
     Quando eu enviar a requisição para o endpoint "/api/agendamento" de cadastro de agendamento
     Então o status code da resposta deve ser 201
 
+  @regressivo
   Cenário: Cadastro de agendamento com dados inválidos
     Dado que eu tenha os seguintes dados da agendamento:
       | campo          | valor        |
@@ -25,6 +29,7 @@ Funcionalidade: Cadastro de novo agendamento
     Então o status code da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "Nome do Cliente é Obrigatório!"
 
+  @regressivo
   Cenário: Cadastro de agendamento com descrição vazia
     Dado que eu tenha os seguintes dados da entrega:
       | campo          | valor         |
@@ -38,6 +43,7 @@ Funcionalidade: Cadastro de novo agendamento
       | Descrição do Material é Obrigatório! |
       | Campo não pode estar Vazio,No maximo 20 caracteres |
 
+  @regressivo
   Cenário: Validar contrato do cadastro bem-sucedido de agendamento
     Dado que eu tenha os seguintes dados da entrega:
       | campo          | valor         |
