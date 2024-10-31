@@ -26,13 +26,15 @@ import java.util.Set;
 
 import static io.restassured.RestAssured.given;
 
+
 public class CadastroAgendamentoService {
     final AgendamentoModel agendamentoModel = new AgendamentoModel();
     public final Gson gson = new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .create();
     public Response response;
-    String baseUrl = "http://host.docker.internal:8080";
+    String baseUrl = System.getenv("BASE_URL") != null ? System.getenv("BASE_URL") : "http://localhost:8080";
+
 
 
     public void setFieldsDelivery(String field, String value) {
