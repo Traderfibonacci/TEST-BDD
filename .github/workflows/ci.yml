@@ -26,8 +26,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd agendamento  # Navegue até o diretório correto
-          docker build -t agendamento-app .  # Construa a imagem Docker
+          cd agendamento-coleta/agendamento  
+          docker build -t agendamento-app .  
 
       - name: Start Docker container
         run: |
