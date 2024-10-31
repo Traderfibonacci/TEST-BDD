@@ -32,7 +32,7 @@ public class CadastroAgendamentoService {
             .excludeFieldsWithoutExposeAnnotation()
             .create();
     public Response response;
-    String baseUrl = "http://localhost:8080";
+    String baseUrl = "http://host.docker.internal:8080";
 
     public void setFieldsDelivery(String field, String value) {
         switch (field) {
