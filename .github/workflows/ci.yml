@@ -1,26 +1,34 @@
 name: Continuous Integration
+
 on:
-  pull_request:  # Aciona para pull requests
-  push:          # Aciona para pushs
+  pull_request:
+  push:
     branches:
-      - '*'  # Isso significa qualquer branch
+      - '*'
+
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '22'
           distribution: 'adopt'
+
       - name: Build and test
-        run: mvn clean test #Esse comando vai rodar os testes
+        run: mvn clean test  # Esse comando vai rodar os testes
+        env:
+          BASE_URL: http://localhost:8080  # Seu URL base
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}  # Seu token JWT
+
   deploy:
     runs-on: ubuntu-latest
-    needs: continuous-integration  # Esse job depende do anterior
-    if: success()  # Esse job só será executado se o job anterior for bem-sucedido
+    needs: continuous-integration
+    if: success()
     steps:
       - name: Deploy application
         run: |
