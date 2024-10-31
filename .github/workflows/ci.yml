@@ -25,7 +25,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Build Docker image
-        run: docker build -t agendamento-app -f agendamento/Dockerfile agendamento  # Construa a imagem Docker a partir do local correto
+        run: docker build -t agendamento-app -f Dockerfile .
+      # Construa a imagem Docker a partir do local correto
 
       - name: Start Docker container
         run: |
