@@ -26,6 +26,7 @@ jobs:
 
       - name: Start server
         run: |
+          # Comando para iniciar o servidor
           java -jar path/to/your/server.jar &
           sleep 30  # Aguarde o servidor iniciar
 
