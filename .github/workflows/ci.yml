@@ -31,7 +31,7 @@ jobs:
           sleep 30  # Aguarde o servidor iniciar
 
       - name: Build and test
-        run: mvn clean test  # Esse comando vai rodar os testes
+        run: mvn clean test
 
   deploy:
     runs-on: ubuntu-latest
