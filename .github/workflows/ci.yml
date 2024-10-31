@@ -26,8 +26,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd agendamento  # Navegue até o diretório correto
-          docker build -t agendamento-app .  # Construa a imagem Docker
+          docker build -t agendamento-app .
 
       - name: Start Docker container
         run: |
@@ -38,7 +37,7 @@ jobs:
         run: mvn clean test  # Esse comando vai rodar os testes
         env:
           BASE_URL: http://host.docker.internal:8080
-          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}  # Adicione seu token de autenticação JWT
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}  # Certifique-se de ter adicionado seu token aos segredos do repositório
 
   deploy:
     runs-on: ubuntu-latest
